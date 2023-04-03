@@ -1,5 +1,4 @@
 
-using System.Security.Cryptography;
 using DBJWTAuthenticationCustomMiddleware.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -16,13 +15,21 @@ namespace DBJWTAuthenticationCustomMiddleware.Helpers
         public   string? Roles {get;set;}
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            var user = (User)context.HttpContext.Items["User"];
-            var userRoles = (List<string>)context.HttpContext.Items["userRoles"];
+            var user = (User?)context.HttpContext.Items["User"];
+            var userRoles = (List<string>?)context.HttpContext.Items["userRoles"];
 
-          
-                Console.WriteLine(this.Roles);
-            
-            if (user == null )
+            var requiredRoles= this.Roles?.Split(',').ToList();
+
+           bool status=false;
+           foreach(var role in requiredRoles){
+                if(userRoles.Contains(role)){
+                    status=true;
+                }else{
+                    status=false;
+                }
+           }
+
+            if (user == null || status==false )
             {
                 context.Result = new JsonResult(new { message = "Unauthorized" })
                 {
@@ -30,17 +37,6 @@ namespace DBJWTAuthenticationCustomMiddleware.Helpers
                 };
 
             }
-
-            bool IsRoleAdmin()
-            {
-                foreach (var role in userRoles)
-                {
-
-                }
-                return false;
-            }
         }
     }
-
-
 }

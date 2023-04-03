@@ -16,7 +16,7 @@ public class DepartmentController : ControllerBase
 
         this._service = service;
     }
-
+    
     [HttpPost("department/authenticate")]
     public IActionResult Authenticate([FromBody] AuthenticateRequest request)
     {
@@ -29,7 +29,9 @@ public class DepartmentController : ControllerBase
         return Ok(user);
     }
 
-    [Authorize(Roles="user")]
+    // [Authorize(Roles=Rolenames.Admin +","+ Rolenames.User)]
+    [Authorize(Roles=Rolenames.Distributor)]
+    // [Authorize(Roles=Rolenames.Admin)]
     [HttpGet("department/getall")]
     public IActionResult GetAllUsers()
     {

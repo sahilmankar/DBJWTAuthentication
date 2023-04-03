@@ -1,10 +1,9 @@
-using System.Text;
+
 using DBJWTAuthenticationCustomMiddleware.Helpers;
 using DBJWTAuthenticationCustomMiddleware.Repositories;
 using DBJWTAuthenticationCustomMiddleware.Repositories.Interfaces;
 using DBJWTAuthenticationCustomMiddleware.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
+
 
 var builder = WebApplication.CreateBuilder(args);
 

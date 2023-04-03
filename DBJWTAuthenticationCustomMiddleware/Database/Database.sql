@@ -27,7 +27,7 @@ CREATE TABLE
     );
 INSERT INTO roles(roleName)
 
-VALUES ('Admin'), ('User'), ('Distrubutor');
+VALUES ('Admin'), ('User'), ('Distributor');
 
 INSERT INTO
     users(

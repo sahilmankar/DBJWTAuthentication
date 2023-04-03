@@ -215,7 +215,6 @@ namespace DBJWTAuthenticationCustomMiddleware.Repositories
         {
             con.Close();
         }
-        Console.WriteLine(user);
         return user;
 
     }
