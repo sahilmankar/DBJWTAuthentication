@@ -4,11 +4,9 @@ using DBJWTAuthenticationCustomMiddleware.Repositories;
 using DBJWTAuthenticationCustomMiddleware.Repositories.Interfaces;
 using DBJWTAuthenticationCustomMiddleware.Services;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
+// Add services to the container
 builder.Services.AddControllers();
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 builder.Services.AddScoped<IUserService,UserService>();
@@ -28,7 +26,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseMiddleware<JwtMiddleware>();

@@ -3,9 +3,12 @@ using DBJWTAuthenticationCustomMiddleware.Models;
 using DBJWTAuthenticationCustomMiddleware.Helpers;
 using DBJWTAuthenticationCustomMiddleware.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using AuthorizeAttribute = DBJWTAuthenticationCustomMiddleware.Helpers.AuthorizeAttribute;
 
 namespace DBJWTAuthenticationCustomMiddleware.Controller;
 [ApiController]
+
 public class DepartmentController : ControllerBase
 {
 
@@ -16,7 +19,6 @@ public class DepartmentController : ControllerBase
 
         this._service = service;
     }
-    
     [HttpPost("department/authenticate")]
     public IActionResult Authenticate([FromBody] AuthenticateRequest request)
     {

@@ -15,7 +15,6 @@ namespace DBJWTAuthenticationCustomMiddleware.Models
         public string? Password { get; set; }
         public string? Token { get; set; }
 
-
         public AuthenticateResponse(User user, string token)
         {
             Id = user.Id;

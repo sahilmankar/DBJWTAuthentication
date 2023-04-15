@@ -7,49 +7,31 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace DBJWTAuthenticationCustomMiddleware.Helpers
 {
-
     public class JwtMiddleware
     {
-
         private readonly RequestDelegate _next;
-
         private readonly AppSettings _appSettings;
 
         public JwtMiddleware(RequestDelegate next, IOptions<AppSettings> appSettings)
-
         {
-
             _next = next;
-
             _appSettings = appSettings.Value;
-
         }
 
         public async Task Invoke(HttpContext context, IUserService userService)
         {
-
             var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-
             if (token != null)
-
                 attachUserToContext(context, userService, token);
-
             await _next(context);
-
         }
 
         private void attachUserToContext(HttpContext context, IUserService userService, string token)
-
         {
-
             try
-
             {
-
                 var tokenHandler = new JwtSecurityTokenHandler();
-
                 var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-  
                 tokenHandler.ValidateToken(token, new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
@@ -61,34 +43,17 @@ namespace DBJWTAuthenticationCustomMiddleware.Helpers
                 }, out SecurityToken validatedToken);
 
                 var jwtToken = (JwtSecurityToken)validatedToken;
-
                 var userId = int.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
 
                 // attach user to context on successful jwt validation
                 context.Items["User"] = userService.GetById(userId);
                 var userRoles = jwtToken.Claims.Where(x => x.Type == "role").Select(c => c.Value).ToList();
-                context.Items["userRoles"]=userRoles;
+                context.Items["userRoles"] = userRoles;
             }
-
-            catch(Exception e)
-
+            catch (Exception e)
             {
-
-               Console.WriteLine("Exception" +e);
+                Console.WriteLine("Exception" + e);
             }
-
         }
-
     }
-
 }
-
-
-
-
-
-
-
-
-
-
